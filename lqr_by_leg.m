@@ -23,7 +23,7 @@ function K = lqr_by_leg(leg_length)
     M1=2;                          %机体质量
     Iw1=0.5*mw1*R1^2;                     %驱动轮转动惯量
     Ip1=mp1*((L1+LM1)^2+0.048^2)/12.0; %摆杆转动惯量
-    IM1=M1*(0.135^2+0.066^2)/12.0;       %机体绕质心转动惯量
+    IM1=M1*(0.1^2+0.3^2)/12.0;       %机体绕质心转动惯量
 
     NM = M*diff(x + (L + LM )*sin(theta)-l*sin(phi),t,2);
     N = NM + mp*diff(x + L*sin(theta),t,2);
@@ -47,10 +47,12 @@ function K = lqr_by_leg(leg_length)
     B=subs(B,[R,L,LM,l,mw,mp,M,Iw,Ip,IM,g],[R1,L1,LM1,l1,mw1,mp1,M1,Iw1,Ip1,IM1,9.8]);
     B=double(B);
   
+    % theta d_theta x d_x phi d_phi
+
     % Q=diag([20 0.1 80 110 700 1]);
     % R=[90 0;0 4];                %T Tp
-    Q=diag([150 1 1 10 300 10]);
-    R=[90 0;0 5];
+    Q=diag([10 0.1 0.1 1e-3 400 1]);
+    R=[100 0;0 5];
 
    % Q=diag([20 0.1 20 1 500 1]);
    % R=[100 0;0,10];                %T Tp
